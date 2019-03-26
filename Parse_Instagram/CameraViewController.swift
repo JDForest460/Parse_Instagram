@@ -9,15 +9,26 @@
 import UIKit
 import AlamofireImage
 import Parse
-class CameraViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class CameraViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate{
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var commentFiled: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        commentFiled.delegate = self
 
-        // Do any additional setup after loading the view.
+    
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func onSubmitButton(_ sender: Any) {
         let post = PFObject(className: "Posts")
         post["caption"]=commentFiled.text
